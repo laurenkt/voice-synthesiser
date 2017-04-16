@@ -1,0 +1,74 @@
+#N canvas 2569 22 790 538 10;
+#X obj 24 61 bng 15 250 50 0 /i:/ empty /i:/ 17 7 1 15 -262144 -1 -1
+;
+#X obj 64 61 bng 15 250 50 0 /ɑ/ empty /ɑ/ 17 7 1 15 -262144 -1 -1
+;
+#X obj 105 61 bng 15 250 50 0 /æ/ empty /æ/ 17 7 1 15 -262144 -1
+-1;
+#X obj 151 61 bng 15 250 50 0 /ɛ/ empty /ɛ/ 17 7 1 15 -262144 -1
+-1;
+#X obj 24 83 bng 15 250 50 0 /u/ empty /u/ 17 7 1 15 -262144 -1 -1
+;
+#X obj 20 481 tgl 15 0 \$0-whisper empty whisper 17 7 1 15 -262144
+-1 -1 0 1;
+#X obj 359 391 select 0;
+#X msg 404 411 \; voice_gain 0 \; voice_noise 0.02;
+#X msg 359 457 \; voice_gain 1 \; voice_noise 0.02;
+#X obj 24 160 bng 15 250 50 0 /S/ empty /S/ 17 7 1 15 -262144 -1 -1
+;
+#X obj 11 27 cnv 15 198 23 empty empty Monophthong vowels 12 12 1
+16 -228856 -1 0;
+#X obj 11 127 cnv 15 198 23 empty empty Consonants 12 12 1 16 -228856
+-1 0;
+#X obj 65 160 bng 15 250 50 0 /p/ empty /p/ 17 7 1 15 -262144 -1 -1
+;
+#X obj 11 187 cnv 15 198 23 empty empty Words 12 12 1 16 -228856 -1
+0;
+#X obj 24 218 bng 15 250 50 0 /Sip/ empty /Sip/ 17 7 1 15 -262144 -1
+-1;
+#X obj 217 376 r /Sip/;
+#X obj 359 370 r \$0-whisper;
+#X obj 64 83 bng 15 250 50 0 /I/ empty /I/ 17 7 1 15 -262144 -1 -1
+;
+#X obj 235 356 loadbang;
+#X obj 235 417 qlist;
+#X obj 663 10 rdefault /u/ 1000;
+#X obj 219 123 rdefault /I/ 1000;
+#X obj 220 10 rdefault /i:/ 1000;
+#X obj 334 10 rdefault /ɑ/ 1000;
+#X obj 443 10 rdefault /æ/ 1000;
+#X obj 554 10 rdefault /ɛ/ 1000;
+#X obj 218 240 rdefault /S/ 259;
+#X msg 218 261 \; unvoiced 0.3 9200 50 \$1 \;;
+#X obj 388 239 rdefault /p/ 240;
+#X msg 220 30 \; f0 156 200 \; f1 1 494 50 100 \; f2 1 2000 50 100
+\; f3 1 2800 50 100;
+#X msg 334 30 \; f0 160 200 \; f1 1 758 50 100 \; f2 1 1265 50 100
+\; f3 1 2714 50 100;
+#X msg 443 30 \; f0 161 200 \; f1 1 809 50 100 \; f2 1 1533 50 100
+\; f3 1 2627 50 100;
+#X msg 554 30 \; f0 164 200 \; f1 1 775 50 100 \; f2 1 1896 50 100
+\; f3 1 2871 50 100;
+#X msg 663 30 \; f0 145 200 \; f1 1 336 50 100 \; f2 1 1639 50 100
+\; f3 1 2502 50 100;
+#X msg 388 260 \; asp_cutoff 4000 \$1 \; f0 160 50 1 \; f1 0.2 758
+50 1 \; f2 0.1 1548 50 1 \; f3 0.02 2779 50 1 \; f4 0.1 3951 50 1 \;
+plosive 0.5 \$1 \;;
+#X msg 219 143 \; f0 128 200 \; f1 1 551 50 100 \; f2 1 1812 50 100
+\; f3 1 2662 50 100 \; f4 1 3951 50 100 \; f5 0.1 5651 50 100;
+#X msg 235 396 read Sip.txt;
+#X connect 6 0 8 0;
+#X connect 6 1 7 0;
+#X connect 15 0 19 0;
+#X connect 16 0 6 0;
+#X connect 18 0 36 0;
+#X connect 20 0 33 0;
+#X connect 21 0 35 0;
+#X connect 22 0 29 0;
+#X connect 23 0 30 0;
+#X connect 24 0 31 0;
+#X connect 25 0 32 0;
+#X connect 26 0 27 0;
+#X connect 28 0 34 0;
+#X connect 36 0 19 0;
+#X coords 0 -1 1 1 200 500 1 10 10;
