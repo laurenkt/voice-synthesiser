@@ -10,7 +10,7 @@
 #X obj 24 83 bng 15 250 50 0 /u/ empty /u/ 17 7 1 15 -262144 -1 -1
 ;
 #X obj 20 481 tgl 15 0 \$0-whisper empty whisper 17 7 1 15 -262144
--1 -1 0 1;
+-1 -1 1 1;
 #X obj 359 391 select 0;
 #X msg 404 411 \; voice_gain 0 \; voice_noise 0.02;
 #X msg 359 457 \; voice_gain 1 \; voice_noise 0.02;
@@ -51,24 +51,24 @@
 \; f3 1 2871 50 100;
 #X msg 663 30 \; f0 145 200 \; f1 1 336 50 100 \; f2 1 1639 50 100
 \; f3 1 2502 50 100;
-#X msg 388 260 \; asp_cutoff 4000 \$1 \; f0 160 50 1 \; f1 0.2 758
-50 1 \; f2 0.1 1548 50 1 \; f3 0.02 2779 50 1 \; f4 0.1 3951 50 1 \;
-plosive 0.5 \$1 \;;
 #X msg 219 143 \; f0 128 200 \; f1 1 551 50 100 \; f2 1 1812 50 100
 \; f3 1 2662 50 100 \; f4 1 3951 50 100 \; f5 0.1 5651 50 100;
 #X msg 235 396 read Sip.txt;
+#X msg 388 260 \; asp_cutoff 4000 \$1 \; f0 160 50 1 \; f1 0.2 758
+50 1 \; f2 0.1 1548 50 1 \; f3 0.02 2779 50 1 \; f4 0.1 3951 50 1 \;
+f5 0.004 5094 70 1 \; plosive 0.5 \$1 \;;
 #X connect 6 0 8 0;
 #X connect 6 1 7 0;
 #X connect 15 0 19 0;
 #X connect 16 0 6 0;
-#X connect 18 0 36 0;
+#X connect 18 0 35 0;
 #X connect 20 0 33 0;
-#X connect 21 0 35 0;
+#X connect 21 0 34 0;
 #X connect 22 0 29 0;
 #X connect 23 0 30 0;
 #X connect 24 0 31 0;
 #X connect 25 0 32 0;
 #X connect 26 0 27 0;
-#X connect 28 0 34 0;
-#X connect 36 0 19 0;
+#X connect 28 0 36 0;
+#X connect 35 0 19 0;
 #X coords 0 -1 1 1 200 500 1 10 10;
