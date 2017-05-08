@@ -1,0 +1,11 @@
+#N canvas 0 22 450 300 10;
+#X obj 179 91 inlet;
+#X obj 175 156 int;
+#X obj 157 249 outlet;
+#X obj 182 123 expr $f1*pow(10 \, \$1);
+#X obj 166 208 expr $f1/pow(10 \, \$1);
+#X text 108 48 round to \$1 decimal places;
+#X connect 0 0 3 0;
+#X connect 1 0 4 0;
+#X connect 3 0 1 0;
+#X connect 4 0 2 0;

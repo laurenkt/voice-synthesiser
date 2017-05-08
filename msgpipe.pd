@@ -1,0 +1,36 @@
+#N canvas 1573 -334 634 512 10;
+#X obj 70 198 pipe;
+#X obj 70 250 list-fifo;
+#X obj 83 440 send;
+#X obj 70 225 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 68 112 list split 1;
+#X obj 70 277 list split 1;
+#X obj 121 389 list trim;
+#X obj 68 85 receive \$1;
+#X text 75 17 works like pipe except for messages. prefix a message
+with \$1 and an integer \, e.g. if invoked with 'wait' \, [wait 50
+some_other_message 1( to send 1 to some_other_message after 50 ms;
+#X obj 121 362 list-fifo;
+#X obj 73 320 t b s;
+#X text 192 361 need to store payload list in another fifo as we need
+to create a buffer whilst the send object has its location set on its
+cold inlet;
+#X obj 65 165 t f f;
+#X text 117 165 make sure to set the delay time before the signal comes
+in otherwise it will not necessarily have the correct delay;
+#X obj 320 285 list-apply expr %s;
+#X connect 0 0 3 0;
+#X connect 1 0 5 0;
+#X connect 3 0 1 0;
+#X connect 4 0 12 0;
+#X connect 4 1 1 1;
+#X connect 5 0 10 0;
+#X connect 5 1 9 1;
+#X connect 6 0 2 0;
+#X connect 7 0 4 0;
+#X connect 9 0 6 0;
+#X connect 10 0 9 0;
+#X connect 10 1 2 1;
+#X connect 12 0 0 0;
+#X connect 12 1 0 1;

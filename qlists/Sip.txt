@@ -1,0 +1,10 @@
+source.voiced.gain 0 0;
+/S/ 210;
+159 /I/ 100;
+source.asp 0 10000 0;
+1 source.asp.gain 0.1 46;
+source.voiced.gain 1 50;
+/I/ 160;
+160 source.voiced.gain 0 35;
+3 source.asp.gain 0 100;
+200 /p/ 120;

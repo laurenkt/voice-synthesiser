@@ -1,0 +1,26 @@
+#N canvas 789 241 640 310 10;
+#X obj 110 99 receive \$1;
+#X obj 110 129 line;
+#X obj 110 196 outlet;
+#X obj 211 249 s \$2;
+#X text 265 154 if rlines is created iwth a 2nd argument \, send the
+message to that argument;
+#X obj 242 123 symbol \$2;
+#X obj 242 186 select 0;
+#X obj 211 226 any;
+#X obj 242 103 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 82 54 inlet;
+#X text 128 55 direct input;
+#X obj 187 154 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 7 1;
+#X connect 1 0 8 0;
+#X connect 5 0 6 0;
+#X connect 6 1 11 0;
+#X connect 7 0 3 0;
+#X connect 8 0 5 0;
+#X connect 9 0 1 0;
+#X connect 11 0 7 0;

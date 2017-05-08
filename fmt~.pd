@@ -1,0 +1,52 @@
+#N canvas 118 115 760 598 10;
+#X obj 26 33 inlet~ source;
+#X obj 26 494 outlet~;
+#X obj 278 69 receive \$1;
+#X obj 145 158 knob 14 14 0 1.5 0 0 \$0-gain \$0-gain.label empty -30
+12 1 11 -262144 -260097 -1 0 1;
+#X obj 102 353 r \$0-gain;
+#X obj 108 120 hsl 50 15 1 12000 0 0 \$0-hz \$0-hz.label  6375Hz 2
+8 1 11 -261682 -99865 -1 2603 1;
+#X obj 444 343 formatlabel \$0-hz   Hz;
+#X obj 108 138 hsl 50 15 1 999 0 0 \$0-bandwidth \$0-bandwidth.label
+bw:999Hz 2 8 1 11 -262144 -99865 -1 4900 1;
+#X obj 444 365 formatlabel \$0-bandwidth bw: Hz;
+#X obj 360 76 symbol \$1;
+#X obj 360 51 loadbang;
+#X obj 211 365 rls \$1.bandwidth \$0-bandwidth.label;
+#X obj 56 203 r \$0-hz;
+#X obj 115 202 r \$0-bandwidth;
+#X obj 56 321 bandpass;
+#X obj 297 109 list append;
+#X obj 298 136 list trim;
+#X obj 84 292 t b f;
+#X text 62 436 [*~] docs claim the arg is needed to use the right inlet
+for floats \, so I have done \, even though testing doesn't seem to
+indicate this;
+#X obj 70 255 expr $f2/(0.015*$f1);
+#X text 118 271 convert bw from hz to factor;
+#X obj 25 367 biquad~;
+#X obj 28 413 *~ 0;
+#X obj 210 343 rvls \$1.hz \$0-hz.label;
+#X text 389 116 f1-4 [bw] [gain1] [hz1] [time1] [gain2] [hz2] [time2]
+;
+#X obj 211 318 rvls \$1.gain \$0-gain.label;
+#X msg 278 195 \; \$8.gain \$2 \$4 \$5 \$7 \; \$8.bandwidth \$1 \$4
+\; \$8.hz \$3 \$4 \$6 \$7 \;;
+#X connect 0 0 21 0;
+#X connect 2 0 15 0;
+#X connect 4 0 22 1;
+#X connect 9 0 15 1;
+#X connect 10 0 9 0;
+#X connect 12 0 19 0;
+#X connect 12 0 14 0;
+#X connect 13 0 19 1;
+#X connect 14 0 21 0;
+#X connect 15 0 16 0;
+#X connect 16 0 26 0;
+#X connect 17 0 14 0;
+#X connect 17 1 14 1;
+#X connect 19 0 17 0;
+#X connect 21 0 22 0;
+#X connect 22 0 1 0;
+#X coords 0 -1 1 1 64 80 1 100 100;
