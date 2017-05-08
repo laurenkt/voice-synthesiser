@@ -1,4 +1,4 @@
-#N canvas 2569 22 790 538 10;
+#N canvas 1441 22 931 793 10;
 #X obj 24 61 bng 15 250 50 0 /i:/ empty /i:/ 17 7 1 15 -262144 -1 -1
 ;
 #X obj 64 61 bng 15 250 50 0 /ɑ/ empty /ɑ/ 17 7 1 15 -262144 -1 -1
@@ -10,65 +10,105 @@
 #X obj 24 83 bng 15 250 50 0 /u/ empty /u/ 17 7 1 15 -262144 -1 -1
 ;
 #X obj 20 481 tgl 15 0 \$0-whisper empty whisper 17 7 1 15 -262144
--1 -1 1 1;
-#X obj 359 391 select 0;
-#X msg 404 411 \; voice_gain 0 \; voice_noise 0.02;
-#X msg 359 457 \; voice_gain 1 \; voice_noise 0.02;
-#X obj 24 160 bng 15 250 50 0 /S/ empty /S/ 17 7 1 15 -262144 -1 -1
+-1 -1 0 1;
+#X obj 29 645 select 0;
+#X msg 74 664 \; voice_gain 0 \; voice_noise 0.02;
+#X msg 29 709 \; voice_gain 1 \; voice_noise 0.02;
+#X obj 24 230 bng 15 250 50 0 /S/ empty /S/ 17 7 1 15 -262144 -1 -1
 ;
 #X obj 11 27 cnv 15 198 23 empty empty Monophthong vowels 12 12 1
 16 -228856 -1 0;
-#X obj 11 127 cnv 15 198 23 empty empty Consonants 12 12 1 16 -228856
+#X obj 11 197 cnv 15 198 23 empty empty Consonants 12 12 1 16 -228856
 -1 0;
-#X obj 65 160 bng 15 250 50 0 /p/ empty /p/ 17 7 1 15 -262144 -1 -1
+#X obj 65 230 bng 15 250 50 0 /p/ empty /p/ 17 7 1 15 -262144 -1 -1
 ;
-#X obj 11 187 cnv 15 198 23 empty empty Words 12 12 1 16 -228856 -1
+#X obj 11 257 cnv 15 198 23 empty empty Words 12 12 1 16 -228856 -1
 0;
-#X obj 24 218 bng 15 250 50 0 /Sip/ empty /Sip/ 17 7 1 15 -262144 -1
--1;
-#X obj 217 376 r /Sip/;
-#X obj 359 370 r \$0-whisper;
-#X obj 64 83 bng 15 250 50 0 /I/ empty /I/ 17 7 1 15 -262144 -1 -1
+#X obj 24 288 bng 15 250 50 0 /baʊt/ empty /baʊt/ 17 7 1 15 -262144
+-1 -1;
+#X obj 29 626 r \$0-whisper;
+#X obj 64 83 bng 15 250 50 0 /I/ empty /I/ 17 7 2 15 -262144 -1 -1
 ;
-#X obj 235 356 loadbang;
-#X obj 235 417 qlist;
-#X obj 663 10 rdefault /u/ 1000;
-#X obj 219 123 rdefault /I/ 1000;
-#X obj 220 10 rdefault /i:/ 1000;
-#X obj 334 10 rdefault /ɑ/ 1000;
-#X obj 443 10 rdefault /æ/ 1000;
-#X obj 554 10 rdefault /ɛ/ 1000;
-#X obj 218 240 rdefault /S/ 259;
-#X msg 218 261 \; unvoiced 0.3 9200 50 \$1 \;;
-#X obj 388 239 rdefault /p/ 240;
-#X msg 220 30 \; f0 156 200 \; f1 1 494 50 100 \; f2 1 2000 50 100
+#X msg 215 29 \; f0 156 200 \; f1 1 494 50 100 \; f2 1 2000 50 100
 \; f3 1 2800 50 100;
-#X msg 334 30 \; f0 160 200 \; f1 1 758 50 100 \; f2 1 1265 50 100
+#X msg 343 31 \; f0 160 200 \; f1 1 758 50 100 \; f2 1 1265 50 100
 \; f3 1 2714 50 100;
-#X msg 443 30 \; f0 161 200 \; f1 1 809 50 100 \; f2 1 1533 50 100
+#X msg 464 29 \; f0 161 200 \; f1 1 809 50 100 \; f2 1 1533 50 100
 \; f3 1 2627 50 100;
-#X msg 554 30 \; f0 164 200 \; f1 1 775 50 100 \; f2 1 1896 50 100
+#X msg 584 29 \; f0 164 200 \; f1 1 775 50 100 \; f2 1 1896 50 100
 \; f3 1 2871 50 100;
-#X msg 663 30 \; f0 145 200 \; f1 1 336 50 100 \; f2 1 1639 50 100
+#X msg 705 29 \; f0 145 200 \; f1 1 336 50 100 \; f2 1 1639 50 100
 \; f3 1 2502 50 100;
-#X msg 219 143 \; f0 128 200 \; f1 1 551 50 100 \; f2 1 1812 50 100
-\; f3 1 2662 50 100 \; f4 1 3951 50 100 \; f5 0.1 5651 50 100;
-#X msg 235 396 read Sip.txt;
-#X msg 388 260 \; asp_cutoff 4000 \$1 \; f0 160 50 1 \; f1 0.2 758
-50 1 \; f2 0.1 1548 50 1 \; f3 0.02 2779 50 1 \; f4 0.1 3951 50 1 \;
-f5 0.004 5094 70 1 \; plosive 0.5 \$1 \;;
+#X msg 214 198 \; f0 128 200 \; f1 1 551 50 100 \; f2 1 1812 50 100
+\; f3 1 2662 50 100 \; f4 1 3951 50 100 \; f5 0.1 5651 50 100 \; f6
+0.2 6777 50 100 \; f7 0.1 7572 50 100 \; f8 0.1 8794 50 100 \; f9 0.4
+9731 50 100;
+#X msg 558 198 \; source.voiced 17 4 0 0 \; wait 1 source.voiced 160
+0 0 200 \; source.fric.gain 0.2 1 \; wait 1 source.fric.gain 0 \$1
+\; source.fric.cutoff 4000 \$1 \; f0 160 50 1 \; f1 0.2 809 50 1 \;
+f2 0.1 1548 50 1 \; f3 0.02 2744 50 1 \; f4 0.1 4034 50 1 \; f5 0.004
+5094 70 1 \; f6 0.004 6261 50 1 \; f7 0.004 7199 50 1 \; f8 0.02 9544
+45 1 \; f9 0.02 11710 45 1 \;;
+#X obj 11 107 cnv 15 198 23 empty empty Dipthongs 12 12 1 16 -228856
+-1 0;
+#X obj 22 142 bng 15 250 50 0 /aʊ/ empty /aʊ/ 17 7 1 15 -262144 -1
+-1;
+#X obj 108 231 bng 15 250 50 0 /t/ empty /t/ 17 7 1 15 -262144 -1 -1
+;
+#X obj 179 542 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 178 570 metro 1000;
+#X obj 300 664 rqlist /Sip/ qlists/Sip.txt;
+#X obj 24 312 bng 15 250 50 0 /Sip/ empty /Sip/ 17 7 1 15 -262144 -1
+-1;
+#X obj 300 684 rqlist /baʊt/ qlists/bout.txt;
+#X obj 705 10 rdefault /u/ 1000;
+#X obj 214 179 rdefault /I/ 1000;
+#X obj 215 10 rdefault /i:/ 1000;
+#X obj 343 12 rdefault /ɑ/ 1000;
+#X obj 464 10 rdefault /æ/ 1000;
+#X obj 584 10 rdefault /ɛ/ 1000;
+#X obj 346 179 rdefault /S/ 259;
+#X obj 558 179 rdefault /p/ 240;
+#X obj 648 439 rdefault /t/ 60 200;
+#X msg 348 201 \; source.fric 0 7000 0 \; wait 1 source.fric 5 16000
+\$1 \; wait \$1 source.fric 0 20000 20 \; f1 0.1 40 551 0 551 0 \;
+f2 0.1 40 1812 0 1812 0 \; f3 0.1 40 2662 0 2662 0 \; f4 0.2 40 4209
+0 4209 0 \; f5 0.4 40 5440 0 5440 0 \; f6 0.4 40 6613 0 6613 0 \; f7
+1 400 8606 0 8606 0 \; f8 1 400 10360 0 10360 0 \; f9 0 400 9731 0
+9731 0 \;;
+#X obj 347 427 rdefault /aʊ/ 30 193;
+#X obj 40 540 msgpipe wait;
+#X msg 346 455 \; source.asp 0.05 1000 0 \; source.voiced.epsilon 4.2
+0 \; source.voiced.timing 0.44 0.38 \; source.voiced.alpha 0.2 \$1
+25 \$2 \; source.voiced 137 20 \$1 127 0 \$2 \; f1 180 1.3 811 \$1
+0 464 \$2 \; f2 180 1.3 1652 \$1 0.6 1022 \$2 \; f3 180 1.3 2467 \$1
+0.1 2336 \$2 \; f4 600 1 3571 \$1 0.3 3466 \$2 \; f5 600 0.1 3781 \$1
+0.02 4210 \$2 \; f6 1000 0.1 5568 \$1 0 5568 \$2 \; f7 1000 0.1 6516
+\$1 0 6711 \$2 \; f8 3000 0.1 7771 \$1 0 7771 \$2 \; f9 10000 0 10450
+\$1 0 10840 \$2;
+#X msg 652 467 \; source.voiced.timing 1 0.49 \; source.asp 0.1 2000
+\$1 \; source.voiced.alpha 0 \$1 0.8 \$2 \; source.voiced 8 0.01 \$1
+60 0 \$2 \; source.fric 0.6 12000 0 \; wait 1 source.fric 0.5 2000
+0 \; wait 2 source.fric 0.4 4000 \$1 \; wait \$1 source.fric 0.08 4000
+10 \; wait 10 wait \$1 source.fric 0 100 \$1 \; f1 300 0.05 1719 0
+0.4 1471 \$1 \; f2 300 0.1 2082 0 0.15 2082 \$1 \; f3 200 0.2 2779
+0 0.05 2779 \$1 \; f4 300 0.8 3755 0 0.85 3755 0 \; f5 500 1 4703 0
+0.15 4703 \$1 \; f6 10000 0.5 6458 0 0 6376 \$1 \; f7 10000 1 8000
+0 0 8000 \$1 \; f8 10000 1 9000 0 0 9000 \$1 \; f9 10000 0.2 14000
+0 0 14000 \$1 \;;
 #X connect 6 0 8 0;
 #X connect 6 1 7 0;
-#X connect 15 0 19 0;
-#X connect 16 0 6 0;
-#X connect 18 0 35 0;
-#X connect 20 0 33 0;
-#X connect 21 0 34 0;
-#X connect 22 0 29 0;
-#X connect 23 0 30 0;
-#X connect 24 0 31 0;
-#X connect 25 0 32 0;
-#X connect 26 0 27 0;
-#X connect 28 0 36 0;
-#X connect 35 0 19 0;
+#X connect 15 0 6 0;
+#X connect 27 0 28 0;
+#X connect 32 0 21 0;
+#X connect 33 0 22 0;
+#X connect 34 0 17 0;
+#X connect 35 0 18 0;
+#X connect 36 0 19 0;
+#X connect 37 0 20 0;
+#X connect 38 0 41 0;
+#X connect 39 0 23 0;
+#X connect 40 0 45 0;
+#X connect 42 0 44 0;
 #X coords 0 -1 1 1 200 500 1 10 10;
