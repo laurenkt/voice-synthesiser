@@ -12,10 +12,6 @@
 #X obj 346 246 fmt~ f3;
 #X obj 419 246 fmt~ f4;
 #X obj 491 247 fmt~ f5;
-#X obj 562 246 fmt~ f6;
-#X obj 634 245 fmt~ f7;
-#X obj 706 245 fmt~ f8;
-#X obj 782 245 fmt~ f9;
 #X connect 2 0 1 0;
 #X connect 3 0 6 0;
 #X connect 5 0 7 0;
@@ -23,16 +19,8 @@
 #X connect 5 0 9 0;
 #X connect 5 0 10 0;
 #X connect 5 0 11 0;
-#X connect 5 0 12 0;
-#X connect 5 0 13 0;
-#X connect 5 0 14 0;
-#X connect 5 0 15 0;
 #X connect 7 0 2 0;
 #X connect 8 0 2 0;
 #X connect 9 0 2 0;
 #X connect 10 0 2 0;
 #X connect 11 0 2 0;
-#X connect 12 0 2 0;
-#X connect 13 0 2 0;
-#X connect 14 0 2 0;
-#X connect 15 0 2 0;
