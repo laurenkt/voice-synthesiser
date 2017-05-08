@@ -1,19 +1,19 @@
-#N canvas 118 115 760 598 10;
+#N canvas 1809 401 760 598 10;
 #X obj 26 33 inlet~ source;
 #X obj 26 494 outlet~;
 #X obj 278 69 receive \$1;
 #X obj 145 158 knob 14 14 0 1.5 0 0 \$0-gain \$0-gain.label empty -30
 12 1 11 -262144 -260097 -1 0 1;
 #X obj 102 353 r \$0-gain;
-#X obj 108 120 hsl 50 15 1 12000 0 0 \$0-hz \$0-hz.label  6375Hz 2
-8 1 11 -261682 -99865 -1 2603 1;
+#X obj 108 120 hsl 50 15 1 12000 0 0 \$0-hz \$0-hz.label  463Hz 2
+8 1 11 -261682 -99865 -1 189 1;
 #X obj 444 343 formatlabel \$0-hz   Hz;
 #X obj 108 138 hsl 50 15 1 999 0 0 \$0-bandwidth \$0-bandwidth.label
-bw:999Hz 2 8 1 11 -262144 -99865 -1 4900 1;
+bw:180Hz 2 8 1 11 -262144 -99865 -1 879 1;
 #X obj 444 365 formatlabel \$0-bandwidth bw: Hz;
 #X obj 360 76 symbol \$1;
 #X obj 360 51 loadbang;
-#X obj 211 365 rls \$1.bandwidth \$0-bandwidth.label;
+#X obj 211 360 rls \$1.bandwidth \$0-bandwidth.label;
 #X obj 56 203 r \$0-hz;
 #X obj 115 202 r \$0-bandwidth;
 #X obj 56 321 bandpass;
@@ -27,12 +27,11 @@ indicate this;
 #X text 118 271 convert bw from hz to factor;
 #X obj 25 367 biquad~;
 #X obj 28 413 *~ 0;
-#X obj 210 343 rvls \$1.hz \$0-hz.label;
-#X text 389 116 f1-4 [bw] [gain1] [hz1] [time1] [gain2] [hz2] [time2]
-;
-#X obj 211 318 rvls \$1.gain \$0-gain.label;
-#X msg 278 195 \; \$8.gain \$2 \$4 \$5 \$7 \; \$8.bandwidth \$1 \$4
-\; \$8.hz \$3 \$4 \$6 \$7 \;;
+#X text 389 116 f1-4 [gain] [hz] [bw] [time_ms];
+#X msg 278 195 \; \$5.gain \$1 \$4 \; \$5.hz \$2 \$4 \; \$5.bandwidth
+\$3 \$4 \;;
+#X obj 211 339 rls \$1.hz \$0-hz.label;
+#X obj 211 318 rls \$1.gain \$0-gain.label;
 #X connect 0 0 21 0;
 #X connect 2 0 15 0;
 #X connect 4 0 22 1;
@@ -43,7 +42,7 @@ indicate this;
 #X connect 13 0 19 1;
 #X connect 14 0 21 0;
 #X connect 15 0 16 0;
-#X connect 16 0 26 0;
+#X connect 16 0 24 0;
 #X connect 17 0 14 0;
 #X connect 17 1 14 1;
 #X connect 19 0 17 0;

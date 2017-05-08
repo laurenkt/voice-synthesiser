@@ -1,4 +1,4 @@
-#N canvas 1573 -334 634 512 10;
+#N canvas 1573 22 634 512 10;
 #X obj 70 198 pipe;
 #X obj 70 250 list-fifo;
 #X obj 83 440 send;
@@ -19,7 +19,6 @@ cold inlet;
 #X obj 65 165 t f f;
 #X text 117 165 make sure to set the delay time before the signal comes
 in otherwise it will not necessarily have the correct delay;
-#X obj 320 285 list-apply expr %s;
 #X connect 0 0 3 0;
 #X connect 1 0 5 0;
 #X connect 3 0 1 0;
