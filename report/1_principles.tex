@@ -1,0 +1,73 @@
+The source-filter theory of speech construction considers voice production as essentially a system of a power source exciting a sound source (the vocal folds), which emit sound through a series of filters (the vocal tract) e.g. the nasal cavity, the mouth and its shape being manipulated, the tongue and its position, and finally radiation from the lips. 
+
+This can be modelled relatively simply with some kind of sound source and the vocal tract transfer function (VTTF). 
+
+In the case of simple implementation with PD the sound source can be modelled with some kind of wave rich in harmonics, e.g. a sawtooth wave or, as we'll see, a more sculpted waveform, and the VTTF as a parallel set of filters.
+
+- Talk about what formants are
+- Talk about noise production
+
+Sound can be split into two general categories: voiced sound which involves a repeated waveform with a fundamental and a series of harmonics, and unvoiced sound which can be modelled as noise (discuss splitting of this into frication/aspiration in the model)
+
+Need to discuss how this relates to consonants and vowels
+
+Frication noise in consonants is not white noise, it starts to fall off at about 1kHz and continues to drop roughly linearly until 10kHz when it is approximately zero. \cite{Johnson2003} Fricatives work like turbulence - the sound of a jet of air hitting an obstacle. \cite{Johnson2003}
+
+More general stuff can be referenced from \cite{Howard2008}
+
+Discuss formants as the resonant freqencies of the cavities in the vocal track \cite{Johnson2003}
+
+Source-filter theory of speech construction.
+
+used parallel rather than series/cascade formant synthesis. This makes it easier to preserve correct formant amplitudes  \cite{Liljencrants1995} which makes for easier feedback loop on analysing formants and correcting.
+
+LF-model models differentiated glottal flow rather than real glottal flow.
+
+Revisited LF-model uses a data reduction scheme to adjust parameters using a reduction to a few other control parameters \cite{Fant1995}:
+
+Spectral tilt $F_a = 1/(2\pi T_a)$, alternative to $R_a = T_a/T_0$.
+
+\begin{align}
+R_a & = \frac{T_a}{T_0} \\
+R_g & = T_0/(2T_p) \\
+R_k & = (T_e - T_p)/T_p \\
+OQ & = T_e/T_0 = (1+R_k)/(2R_g) \\
+R_d &= (T_d/T_0)(1/110) \\
+&= (U_0/E_e)/(F_0/110) \\
+& \approx (0.5 + 1.2R_k)(R_k/(4R_g) + R_a)/0.11
+\end{align}
+
+Use \cite{Gobl1988} for indications of parameters for typical male speakers (e.g. $F_a = \si{700 Hz} $, $R_k = 0.30$ $R_g=1.20$. Notes $E_e$ tends to be stronger for vowels and weaker for consonants. Voiced consonants weaker than vowels. Some limitations on this data: it's gathered from only 3 speakers, all Swedish, and all male. This also demonstrates the impact of prosody on voice source parameters. Notes that decrease of $E_e$ is generally accompanied by an increase of $r_a$ and $r_k$.
+
+Increasing $R_k$ raises level of voice fundamental relative to upper parts of the spectrum. Increasing $R_a$ (and thereby decreasing $F_a$) gives a secondary effect of a relative boost of the fundamental which occurs in breathy phonation. Increasing $R_g$ promotes the level of the second harmonic at the expense of the fundamental. Sonorous voices have relatively high $F_a$ of the order of \si{2000Hz} \cite{Fant1995}
+
+The 'shape parameter' $R_d = (U_0/E_e)(F_0/110)$.  \cite{Fant1995} discusses some statistical relations, cited from  a 1994 publication that I was unable to locate a copy of. \cite{Fant1994}. These are the following predicated values, as they relate to $R_d$, and an estimation of $R_d$ from the geometrical constraints of the LF model:
+
+\begin{align}
+R_a & \approx (-1+4.8R_d)/100 \\
+R_k  & \approx (22.4 + 11.8R_d)/100 \\
+R_d & \approx (1/0.11)(0.5+1.2R_k)(R_k/4R_g+R_a)
+\end{align}
+The main range of variation is $0.3 < R_d < 2.7$, and the upper range is intended for transitions towards complete abduction as in prepause voice terminations.
+
+Here's an example of the variation from \cite{Fant1995}: "
+A pronounced vocal-tract narrowing, as in the [i:] and [y:] and the maximally rounded [u:] and [\sout{u}:], causes a loss of transglottal pressure which modifies the glottal flow pulse towards a greater $R_d$ value and a somewhat lower $E_e$."
+
+Higher $R_d$ is typical of female vs male phonations, but also found in voiced consoants and aspirated vowels vs regular vowels. \cite{Fant1995}
+
+Using 'analysis-by-synthesis' to determine LF model parameters, comparing recorded sound with that of a synthesiser and then adjusting parameters until the spectrograms are close to each-other, this is the approach used. \cite{Fant1995}
+
+Naturalness has been shown to be linked with aspiration noise introduced at higher frequencies in the vowels, and also to the relative strength of the fundamental component (less so in the case of a female voice). \cite{Klatt1990}
+
+On naturalness of the voice, one approach is a small slowly varying $F_0$ pseudorandomness \cite{Klatt1990} (period-to-period flutter) – maybe adjusting the timing parameters of the LF model. The same study discusses a diplophonic double pulsing in whcih pairs of glottal pulses migrate toward one another and the first of the pair is usually attenuated in amplitude. Tends to occur when the fundamental is low (voicing is unstable). (possible further improvement).
+
+Note \cite{Klatt1990} discusses the limitations of adding this pseudorandom flutter to $F_0$, referencing that other efforts have led to a harsh voice quality (Rozsypal and Millar, 1979). They propose a slow quasirandom drift to $F_0$ contour thru FL flutter control parameter. The sum of three slowly varying sine waves. Suggested FL value of 25%
+
+\begin{align}
+\Delta F_0 = & (FL/50)(F_0/100)(\sin(2 \pi 12.7t) \\ 
+& + \sin(2 \pi 7.1t) + \sin(2 \pi 4.7t) \si{Hz}
+\end{align}
+
+\cite{Klatt1990} also discusses naturalness by  mixing an impulse train and noise as the source waveform (Kate et al 1967; Holmes 1973) - specifying a cutoff frequency below which the source consists of harmonics, and above which the source if lat-spectrum noise. also see rothenberg et al (1975) and makhoul et al (1978)
+
+The LF model exploits the (assumed) commutative relationship between the voice source, vocal tract, and lip radiation, to combine the ffects of the voice source and lip radiation into one model. \cite{DelPozo2008}

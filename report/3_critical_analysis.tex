@@ -1,0 +1,23 @@
+Using 'typical' values for voice source parameters is hard because trans voices differ from typical male or female voices. \cite{Gunzburger1995} Particularly for trans women there is a tendency for $F_3$ to be raised compared to male voices, with slower speech at reduced loudness and a higher $F_0$. 
+
+I had enormous problems matching up the "statistical relations" for the R parameters in the LF-model \cite{Fant1995} - particularly due to it containing linear models of non-linear parameters. The work in progress for this can be seen in the \texttt{lfmodel\char`~} patch.
+
+I found that much of my alterations, though making sense from a theoretical perspective and being audible in contrived examples, made minimal impact when real words were being synthesised. It's probably quite important to do real listening tests.
+
+bp~ vs biquad~ vs bpw2~
+
+Non-linear ramping/tweening would be good
+
+Discussion of whether frication noise should be emitted when glottis isn't open - tricky to implement in my model
+
+One problem is that when LF parameters are adjusted it only attempts to rewrite the glottal derivative waveform once per DSP cycle. (And as soon as one parameter is updated it essentially blocks all others until that rewrite is complete).
+
+This would be fine if it could update the glottal waveform in one DSP cycle (bearing in mind at 44K it's approx .000022676 seconds or 23µs per cycle). But on my machine when timing it, it took 1.31ms or 1310µs to complete a cycle. So obviously this indicates a significant loss of resolution. I'm not sure what effect receiving new bangs has on this process/what impact interrupt has (which will surely occur in this situation).
+
+A better solution might be to continually update the glottal waveform, in this case interpolation would need to be done between values to prevent introducing a lot of high frequency distortion when the time-domain amplitude changes rapidly based on a completely different glottal derivative (this effect is somewhat masked by the per-cycle update because the glottal waveform tends to gravitate towards zero at the start and end of the cycle).
+
+Sometimes there is interpolation noise/distortion which really is unacceptable and should be eliminated although because PD can be somewhat obtuse in the order it processes things and the timings of commands being sent this can be somewhat difficult.
+
+One problem was that the more control parameters were added to the synthesiser the harder it got to experiment to find the right sound (partially down to a bug in OS X PD where the typing caret does not appear in message boxes). At the start it was much easier to pin down a certain sound before more 'realistic' parameters were added and iteration became much slower.
+
+Can show waveforms of my voice vs. what comes out of the synthesiser. Note it would be nice to be able to record the voice things with an extremely flat microphone at consistent distances with measured freq responses in an anechoic chamber for proper comparion (and normalize the levels).

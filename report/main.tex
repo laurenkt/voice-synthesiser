@@ -1,0 +1,48 @@
+\input{preamble}
+\paths{{./assets/}}
+
+\begin{document}
+
+	\coverpage{PureData Source-filter Speech Synthesiser}
+	
+	\begin{multicols}{2}
+	
+		\section{Principles of voice synthesis}
+		\input{1_principles}
+		
+		\section{How the PD patch works}
+		\input{2_how_it_works}
+		
+		\section{Critical analysis of the synthesiser}
+		\input{3_critical_analysis}
+		
+		\section{Future improvements}
+		\input{4_improvements}
+		
+	\end{multicols}
+	
+	\pagebreak
+	
+	\pagenumbering{Roman}
+	\appendix
+	\section{Appendix}
+	
+	\subsection{IPA transcription and VPM description}
+	
+	``Bout" – /baʊt/
+	
+	b  – bilabial plosive stop voiced
+	aʊ
+	t - alveolar voiceless plosive stop
+	
+	\subsection{Acoustic characteristics of the vowel and consonants}
+	
+	\subsection{Control parameters for the synthesis system}
+	\subsection{Glossary of custom PD objects}
+	
+	\subsection{Indicative screen-shots of the PD patch}
+	
+	\bibliographystyle{ieeetr}
+	\bibliography{library.bib}
+
+\end{document}
