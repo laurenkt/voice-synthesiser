@@ -62,7 +62,7 @@
 #X msg 604 360 roomsize 0.1;
 #X msg 699 364 damping 2;
 #X obj 469 568 savepanel;
-#X obj 469 546 bng 15 250 50 0 empty \$0-save-location empty 17 7 0
+#X obj 469 546 bng 15 250 50 0 empty \$0-save.location empty 17 7 0
 10 -262144 -1 -1;
 #X msg 542 509 label ●;
 #X msg 634 486 label ■;
@@ -81,22 +81,22 @@ dsp 2 9 1 9 -225271 -195568 -33289 1 1;
 0 1;
 #X obj 107 143 bng 20 250 50 0 \$0-record-toggle \$0-record-button
 ● 2 7 0 30 -262144 -262144 -258699;
-#X obj 133 145 tgl 15 0 \$0-save-location \$0-filename ⏏️  /Users/lauren/Projects/Voice
-17 7 0 10 -262144 -1 -1 0 1;
 #X obj 548 596 s \$0-recording-bg;
 #X msg 548 570 color 43 0;
 #X obj 810 543 s \$0-recording-bg;
 #X msg 810 517 color 30 0;
-#X msg 470 595 label ⏏️  \$1;
 #X obj 442 598 any;
 #X msg 492 652 open \$1 \, start;
-#X obj 439 577 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
 #X obj 62 64 loadbang;
 #X msg 62 113 0;
 #X obj 540 43 loadbang;
 #X msg 539 71 1;
 #X obj 542 98 s \$0-v.label;
+#X obj 135 145 bng 15 50 10 0 \$0-save.location \$0-filename ⏏️   ./records/new.wav
+4 7 1 9 -262144 -1 -1;
+#X msg 470 595 label ⏏️   \$1;
+#X obj 439 577 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
 #X connect 0 0 10 0;
 #X connect 3 0 10 1;
 #X connect 5 0 4 0;
@@ -124,16 +124,16 @@ dsp 2 9 1 9 -225271 -195568 -33289 1 1;
 #X connect 23 0 24 0;
 #X connect 23 0 30 0;
 #X connect 23 0 35 0;
-#X connect 23 0 46 0;
+#X connect 23 0 45 0;
 #X connect 23 1 25 0;
 #X connect 23 1 31 0;
 #X connect 23 1 34 0;
-#X connect 23 1 44 0;
-#X connect 23 1 50 0;
+#X connect 23 1 43 0;
+#X connect 23 1 55 0;
 #X connect 26 0 13 0;
 #X connect 27 0 13 0;
-#X connect 28 0 47 0;
-#X connect 28 0 48 1;
+#X connect 28 0 54 0;
+#X connect 28 0 46 1;
 #X connect 29 0 28 0;
 #X connect 30 0 33 0;
 #X connect 31 0 33 0;
@@ -144,14 +144,14 @@ dsp 2 9 1 9 -225271 -195568 -33289 1 1;
 #X connect 38 0 5 0;
 #X connect 39 0 2 0;
 #X connect 40 0 17 0;
-#X connect 44 0 43 0;
-#X connect 46 0 45 0;
-#X connect 47 0 36 0;
+#X connect 43 0 42 0;
+#X connect 45 0 44 0;
+#X connect 46 0 47 0;
+#X connect 47 0 22 0;
 #X connect 48 0 49 0;
-#X connect 49 0 22 0;
-#X connect 50 0 48 0;
+#X connect 49 0 40 0;
+#X connect 50 0 51 0;
 #X connect 51 0 52 0;
-#X connect 52 0 40 0;
-#X connect 53 0 54 0;
-#X connect 54 0 55 0;
+#X connect 54 0 36 0;
+#X connect 55 0 46 0;
 #X coords 0 -1 1 1 400 90 1 100 100;
