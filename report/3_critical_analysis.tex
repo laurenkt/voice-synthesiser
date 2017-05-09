@@ -23,3 +23,54 @@ One problem was that the more control parameters were added to the synthesiser t
 Can show waveforms of my voice vs. what comes out of the synthesiser. Note it would be nice to be able to record the voice things with an extremely flat microphone at consistent distances with measured freq responses in an anechoic chamber for proper comparion (and normalize the levels).
 
 Went up to 9 formants.. but this ended up meaning tweaking and iterating was taking a long time so I stripped it back down to 5. Lost some realism on sustained vowels but gained it on words.
+
+There's a few things I attempted to develop in this project but that I had trouble with that would be potential room for development. I spent a lot of time researching voice source models to try and build a system that could produce characteristic sound of a human voice. Part of this voice source model involves the voice source parameters changing in response to certain things. For example the acoustic characteristics of the source in one vowel may be different to another, or for consonants, or even due to stress, loudness, tiredness, and endless other factors. Although I did try implementing a system that boiled down, using statistical relations, the voice source parameters for various vowels, I did not manage to get it working due to time and availability constraints. 
+This could form part of a large system that would allow the modulation of the voice in terms of emotion, stress, and prosody.
+To get an accurate set of voice source parameters I could use inverse filtering to negate the effects of the vocal tract on a voice recording, although it may be difficult to reproduce sound precisely with the LF-model and this approach due to recurrent patterns and randomness in normal human speech \cite{Fant1995}.
+
+I would like to implement a complete set of IPA phonemes in the synthesiser. For the most part this would be as simple as analysing them in Praat and keying the values into the synthesiser. For some types of consonants this would be more complicated. It seems like an optimised synthesiser would allow automated targeting of speech and would try and fit the parameters to this as best as possible.
+
+The noise for the fricatives just uses PD's \texttt{pink~} object. Whilst this is more realistic than white noise it doesn't quite share the same spectral properties as the fricative noise actually produced by the body \cite{Johnson2003}. It would be good to create a more sophisticated model of the source of unvoiced sounds such as there is for voiced sounds.
+
+
+Wanted to get LF-model controlled by a single or two parameters and then determine these on a per phoneme basis, but had trouble getting the maths right. In the end due to running out of time just went for manually dialing in the timing parameters. I would really love to explore a more advanced model.
+
+\cite{Liljencrants1995} shows an example of a physical model, which "mimics" the details of the glottal oscillation process, with the intent on providing realism not possible in a simplified model. 
+
+It has been demonstrated that there's an association between excitation amplitude $E_e$ with $F_0$ in Swedish. \cite{Fant1994}. Assuming this extends to English, it could be a factor for an improved system that can convey some more extra-lingual semantics onto the speech synthesis system, e.g. making the synthesised speech sounding more stressed.
+
+An alternative to the LF-model has been proposed that is more computationally efficient and demonstrated to be perceptually equivalent in a psychoacoustic experiment. \cite{Veldhuis1998}. Currently for 512 samples the system seems to perform adequately with the LF-model but perhaps for higher-resolutions this alternative would be better suited.
+
+discuss bandwidth of formants not showing much affect on naturalness perception
+
+discuss relatively cumbersome development process in PD vs other processes
+
+limitations of building phoneme by phoneme. success for single words but more involved in full sentences
+
+Additional features such as vocal fry would require more work. \cite{Gobl1988} states glottal flow for creaky phonation differing substantially.
+
+\cite{Klatt1990} states transition from a voiceless consonant to a vowel often includes a short interval of breathy voicing in which the first-harmonic amplitude is increased. This could indicate the need to add aspiration noise as well as adjust the voice source parameters to increase the first-harmonic.
+
+\cite{Klatt1990} notes that breathiness increases for unstressed  and final syllables, and at the margins of voiceless consonants.
+
+\cite{Klatt1990} also discusses scenarios where different formant models, cascade or parallel, are applicable, and amplitude modulation of aspiration and frication noise to simulate the effect of vocal-fold vibration:
+
+".
+There is a cascade formant model
+of the vocal-tract transfer function for laryngeal sound sources,
+and a parallel formant model with formant ampli-
+tude controls for frication excitation.
+A third vocal-tract
+model in which the vocal-tract transfer function for laryn- geal sound sources
+is approximated by formants
+configured
+in parallel is useful for some specialized
+synthesis
+applica-
+tions, but is normally not used.
+As was the case in the origi-
+nal formant synthesizer,
+the aspiration and frication noise
+sources are amplitude modulated, to simulate the effect of vocal-fold vibration, if AV is nonzero."
+
+Would probably reimplement in something like Super collider but if had to continue using PD would work more on control primitives so that prototyping is much faster.
