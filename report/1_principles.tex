@@ -1,73 +1,63 @@
-The source-filter theory of speech construction considers voice production as essentially a system of a power source exciting a sound source (the vocal folds), which emit sound through a series of filters (the vocal tract) e.g. the nasal cavity, the mouth and its shape being manipulated, the tongue and its position, and finally radiation from the lips. 
 
-This can be modelled relatively simply with some kind of sound source and the vocal tract transfer function (VTTF). 
+%	1. Background of human voice system
+%	2. Approaches for modelling this
+%	3. Source-filter approach specifically
+%	4. More details about vowels vs consonants, and the voice source
 
-In the case of simple implementation with PD the sound source can be modelled with some kind of wave rich in harmonics, e.g. a sawtooth wave or, as we'll see, a more sculpted waveform, and the VTTF as a parallel set of filters.
+The source-filter model of speech construction considers voice production as essentially a system of a power source exciting a sound source (the vocal folds), which emit sound through a series of filters (the vocal tract) e.g. the nasal cavity, the mouth and its shape being manipulated, the tongue and its position, and finally radiation from the lips \cite{Howard2008}. 
 
-- Talk about what formants are
-- Talk about noise production
+\textit{Voiced} speech, such as vowels and some consonants, have a pitch (and therefore a fundamental frequency). This results from the vibration of the focal folds in the larynx \cite{Howard2008}. \textit{Unvoiced} speech such as consonants such as \ipa{s} and a \ipa{tʃ} is created from turbulent air travelling through a constriction in the vocal tract \cite{Howard2008,Narayanan2000,Johnson2003} and can be modelled aeroacoustically as jets.
 
-Sound can be split into two general categories: voiced sound which involves a repeated waveform with a fundamental and a series of harmonics, and unvoiced sound which can be modelled as noise (discuss splitting of this into frication/aspiration in the model)
+When voiced sound is produced, the sound will be modified as it travels along the vocal tract: up the pharynx, throw the nasal and mouth cavities, around the tongue and alveolar ridge, the teeth, through the nostrils and radiating from the lips. Various parts of the tract will have filtering and resonance effects which produces non-harmonic peaks in the sound signal as it is produced \cite{Johnson2003}. These peaks are called \textit{formants}. The effects of the vocal tract can be summarised as the vocal tract transfer function (VTTF).
 
-Need to discuss how this relates to consonants and vowels
+The relative positions of these formants are what enables us to perceive different vowels even if they are of the same pitch (whilst people may produce certain vowels at higher pitches compared to other vowels, the pitch itself is not crucial, as can be demonstrated by singing vowels at different pitches and observing that the vowel can still be determined).
 
-Frication noise in consonants is not white noise, it starts to fall off at about 1kHz and continues to drop roughly linearly until 10kHz when it is approximately zero. \cite{Johnson2003} Fricatives work like turbulence - the sound of a jet of air hitting an obstacle. \cite{Johnson2003}
+For a very simple but intelligible synthesiser then, we would have to produce a wave rich in harmonics and then put it through an array of filters to model the formants. The reason it is necessary to have a wave rich in harmonics is so there is enough higher frequency content for the formants to pass through to create intelligible speech.
 
-More general stuff can be referenced from \cite{Howard2008}
+Generally three filters (formants) and a sawtooth wave as a sound source would be sufficient for intelligibility if not naturalness.
 
-Discuss formants as the resonant freqencies of the cavities in the vocal track \cite{Johnson2003}
+Frication noise can be modelled loosely with white noise, although in reality it is not uniformly distributed; it starts to fall off at about 1kHz and falls roughly linearly to zero at 10kHz \cite{Johnson2003}.
 
-Source-filter theory of speech construction.
+The formants can be modelled in parallel or in series (referred to as cascade synthesis in the literature) and there are pros and cons for either approach. Liljencrants \cite{Liljencrants1995} notes parallel makes it easier to preserve correct formant amplitudes and this is the approach I took, as the feedback loop of analysing the output of the synthesiser and making adjustments needed to be as short as possible given the time constraints of the project.
 
-used parallel rather than series/cascade formant synthesis. This makes it easier to preserve correct formant amplitudes  \cite{Liljencrants1995} which makes for easier feedback loop on analysing formants and correcting.
+\subsection{Naturalness}
 
-LF-model models differentiated glottal flow rather than real glottal flow.
+To develop natural sounding synthesis it can be useful to introduce high frequency \textit{aspiration noise} in the vowels, amplitude-modulated by the voice source \cite{Klatt1990}. Boosting the relative strength of the fundamental is also helpful for male voices in particular \cite{Klatt1990}.
 
-Revisited LF-model uses a data reduction scheme to adjust parameters using a reduction to a few other control parameters \cite{Fant1995}:
+In order to do this it helps to revisit the sound source that creates the spectral properties needed to be exhibited by the filters. Fant et al proposed \cite{Fant1985} a four parameter model of differentiated glottal flow called the LF-model which has formed the basis of much work in this area. 
 
-Spectral tilt $F_a = 1/(2\pi T_a)$, alternative to $R_a = T_a/T_0$.
+The LF model exploits the (assumed) commutative relationship between the voice source, vocal tract, and lip radiation, to combine the effects of the voice source and lip radiation into one model \cite{DelPozo2008}.
 
-\begin{align}
-R_a & = \frac{T_a}{T_0} \\
-R_g & = T_0/(2T_p) \\
-R_k & = (T_e - T_p)/T_p \\
-OQ & = T_e/T_0 = (1+R_k)/(2R_g) \\
-R_d &= (T_d/T_0)(1/110) \\
-&= (U_0/E_e)/(F_0/110) \\
-& \approx (0.5 + 1.2R_k)(R_k/(4R_g) + R_a)/0.11
-\end{align}
+Li et al \cite{Li2011} define a version of the simplified LF-model expressed for a discrete implementation, replacing the time parameters with ratios and samples (rearranged into equation \ref{eq:discrete_lfmodel}, below).
+ 
+\begin{equation}%
+\label{eq:discrete_lfmodel}%
+	E(k) = -E_e \cdot
+	\begin{cases}
+		\dfrac{e^{\frac{\alpha k}{N}} \sin ( \frac{\pi k}{ T_p N} )}{e^{\alpha T_e} \sin (\frac{\pi T_e}{T_p})}, & 0 \leq k \leq T_e N \\
+		\dfrac{e^{-\epsilon(\frac{k}{N} - T_e)} - e^{-\epsilon(1-T_e)}}{\epsilon T_a}, & T_e N < k \leq N
+	\end{cases}	
+\end{equation}
 
-Use \cite{Gobl1988} for indications of parameters for typical male speakers (e.g. $F_a = \si{700 Hz} $, $R_k = 0.30$ $R_g=1.20$. Notes $E_e$ tends to be stronger for vowels and weaker for consonants. Voiced consonants weaker than vowels. Some limitations on this data: it's gathered from only 3 speakers, all Swedish, and all male. This also demonstrates the impact of prosody on voice source parameters. Notes that decrease of $E_e$ is generally accompanied by an increase of $r_a$ and $r_k$.
+In the above equation $N$ and $k$ represent the total number of samples and the current sample, respectively. $T_p$, $T_e$, and $T_a$ define the time to the maximum glottal flow, the time until the open phase, and the time until the return phase. $E_e$ is the maximum magnitude of glottal closure excitation. $\epsilon$ and $\alpha$ control the shape of the curves.
 
-Increasing $R_k$ raises level of voice fundamental relative to upper parts of the spectrum. Increasing $R_a$ (and thereby decreasing $F_a$) gives a secondary effect of a relative boost of the fundamental which occurs in breathy phonation. Increasing $R_g$ promotes the level of the second harmonic at the expense of the fundamental. Sonorous voices have relatively high $F_a$ of the order of \si{2000Hz} \cite{Fant1995}
+A revisited LF-model uses a data reduction scheme to reduce the number of control parameters \cite{Fant1995}. This can make synthesis simpler by reducing to controls parameters ($R_a$, $R_g$, $R_k$) although it was only partially implemented in my final model. A useful property is given as
+%
+\begin{equation}
+	F_a = \dfrac{1}{2\pi T_a}
+\end{equation}
+%
+which determines the spectral tilt of the waveform \cite{Fant1995}. 
 
-The 'shape parameter' $R_d = (U_0/E_e)(F_0/110)$.  \cite{Fant1995} discusses some statistical relations, cited from  a 1994 publication that I was unable to locate a copy of. \cite{Fant1994}. These are the following predicated values, as they relate to $R_d$, and an estimation of $R_d$ from the geometrical constraints of the LF model:
+An analysis done by Gobl \cite{Gobl1988} produces some useful indications for typical male speakers (e.g. $F_a = \si{700 Hz}$). $E_e$ tends to be stronger for vowels and weaker for consonants. The limitations of this data are that it is gathered from only three speakers, all Swedish, and all male. Nonetheless it is a useful starting point in lieu of further analysis. Gobl also notes the impact of speech prosody (stress, intonation) on voice source parameters 
 
-\begin{align}
-R_a & \approx (-1+4.8R_d)/100 \\
-R_k  & \approx (22.4 + 11.8R_d)/100 \\
-R_d & \approx (1/0.11)(0.5+1.2R_k)(R_k/4R_g+R_a)
-\end{align}
-The main range of variation is $0.3 < R_d < 2.7$, and the upper range is intended for transitions towards complete abduction as in prepause voice terminations.
-
-Here's an example of the variation from \cite{Fant1995}: "
-A pronounced vocal-tract narrowing, as in the [i:] and [y:] and the maximally rounded [u:] and [\sout{u}:], causes a loss of transglottal pressure which modifies the glottal flow pulse towards a greater $R_d$ value and a somewhat lower $E_e$."
-
-Higher $R_d$ is typical of female vs male phonations, but also found in voiced consoants and aspirated vowels vs regular vowels. \cite{Fant1995}
-
-Using 'analysis-by-synthesis' to determine LF model parameters, comparing recorded sound with that of a synthesiser and then adjusting parameters until the spectrograms are close to each-other, this is the approach used. \cite{Fant1995}
-
-Naturalness has been shown to be linked with aspiration noise introduced at higher frequencies in the vowels, and also to the relative strength of the fundamental component (less so in the case of a female voice). \cite{Klatt1990}
-
-On naturalness of the voice, one approach is a small slowly varying $F_0$ pseudorandomness \cite{Klatt1990} (period-to-period flutter) – maybe adjusting the timing parameters of the LF model. The same study discusses a diplophonic double pulsing in whcih pairs of glottal pulses migrate toward one another and the first of the pair is usually attenuated in amplitude. Tends to occur when the fundamental is low (voicing is unstable). (possible further improvement).
-
-Note \cite{Klatt1990} discusses the limitations of adding this pseudorandom flutter to $F_0$, referencing that other efforts have led to a harsh voice quality (Rozsypal and Millar, 1979). They propose a slow quasirandom drift to $F_0$ contour thru FL flutter control parameter. The sum of three slowly varying sine waves. Suggested FL value of 25%
-
-\begin{align}
-\Delta F_0 = & (FL/50)(F_0/100)(\sin(2 \pi 12.7t) \\ 
-& + \sin(2 \pi 7.1t) + \sin(2 \pi 4.7t) \si{Hz}
-\end{align}
-
-\cite{Klatt1990} also discusses naturalness by  mixing an impulse train and noise as the source waveform (Kate et al 1967; Holmes 1973) - specifying a cutoff frequency below which the source consists of harmonics, and above which the source if lat-spectrum noise. also see rothenberg et al (1975) and makhoul et al (1978)
-
-The LF model exploits the (assumed) commutative relationship between the voice source, vocal tract, and lip radiation, to combine the ffects of the voice source and lip radiation into one model. \cite{DelPozo2008}
+A feature of real speech is that the fundamental pitch is not constant, it exhibits some flutter \cite{Klatt1990}. One approach to model this might be to vary the timing parameters in the LF-model, but Klatt \& Klatt note \cite{Klatt1990} many efforts at randomising the fundamental produce harshness in the resultant voice, and they propose an alternative pseudorandom contour to $F_0$ where
+%
+\begin{equation} \label{eq:flutter}
+	\begin{aligned}
+		\Delta F_0  = & \frac{\textrm{FL} \cdot F_0}{5000} \big[\sin(2 \pi 12.7t) \\ 
+		& + \sin(2 \pi 7.1t) + \sin(2 \pi 4.7t)\big]
+	\end{aligned}
+\end{equation}
+%
+suggesting an $\textrm{FL}$ value of 25. This is implemented in my synthesiser.

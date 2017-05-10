@@ -1,12 +1,16 @@
-\newcommand{\pdobject}[5]{
-\begin{table}[H]
-\begin{tabular}{llll}
+\subsection{Glossary of custom PD objects}
+\label{x:glossary}
+
+\newcommand{\pdobject}[5]{%
+\vspace*{-\baselineskip}% decrease space between tables
+\begin{table}[H]%
+\begin{tabular}{llll}%
  & \textbf{Arguments} & \textbf{Inlets} & \textbf{Outlets} \\ \hline
 \rowcolor[HTML]{EFEFEF} 
 \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{\texttt{#1}}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textit{\texttt{#2}}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textit{\texttt{#3}}} & \multicolumn{1}{l}{\cellcolor[HTML]{EFEFEF}\textit{\texttt{#4}}} \\ \hline
 \multicolumn{4}{p{\textwidth}}{#5} \\ 
-\end{tabular}
-\end{table}
+\end{tabular}%
+\end{table}%
 }
 
 \pdobject{analyser\char`~}{–}{\$input}{\$passthrough}{
@@ -21,6 +25,7 @@ Display a time-domain and a frequency-domain representation (log-scale FFT) of t
 \pdobject{msgpipe}{}{}{}{}
 \pdobject{quasirandomdrift}{}{}{}{}
 \pdobject{rdefault}{}{}{}{}
+\pdobject{recall}{}{}{}{}
 \pdobject{rls}{}{}{}{}
 \pdobject{round}{}{}{}{}
 \pdobject{rqlist}{}{}{}{}

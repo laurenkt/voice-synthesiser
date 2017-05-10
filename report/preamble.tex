@@ -1,4 +1,5 @@
 \documentclass[11pt,a4paper,titlepage]{article}
+
 \usepackage[top=2.5cm,left=1.5cm,right=1.5cm,bottom=2cm,headheight=13.6cm]{geometry}
 \usepackage{color}
 \usepackage{listings}
@@ -6,14 +7,25 @@
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{titling}
-\usepackage{amsmath}
+\usepackage{amsmath} % cases
 \usepackage{multicol}
 \usepackage{xltxtra}
 \usepackage{siunitx}
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage[normalem]{ulem}
 \usepackage[table,xcdraw]{xcolor}
+\usepackage{fontspec} % set truetype font
 \usepackage{pgfkeys}
+\usepackage{soul} % fancy underlining
+\usepackage{cite} % for range e.g [1-3]
+
+%unicode fixer
+%\usepackage[Latin,Greek,Phonetics]{ucharclasses} % please make unicode work. Please.
+%\newfontfamily\substitutefont{Iosevka} % has most glyphs 
+%\setTransitionsFor{IPAExtensions}{\begingroup\substitutefont}{\endgroup}
+
+\setmonofont[Scale=MatchLowercase]{Iosevka}
+
 % restore sensible table spacings
 \renewcommand{\arraystretch}{1.5}
 
@@ -96,6 +108,8 @@
 \renewcommand{\cftsubsecpagefont}{\regularfont}
 % Adjust spacing in TOC
 \setlength\cftbeforesubsecskip{5pt}
+% remove annoying space before maths
+\setlength{\abovedisplayskip}{0pt}
 
 
 % redefine footer
@@ -148,30 +162,19 @@
     \pagenumbering{arabic}%
 }
 
-% Custom arguments for /fig command
-\pgfkeys{
- /fig/.is family, /fig,
- default/.style = 
-  {scale = 1,
-   angle = 0},
- scale/.estore in = \figScale,
- angle/.estore in = \figAngle
-}
-\newcommand{\fig}[2][]{%
-	\pgfkeys{/fig, default, #1}%
-	\begin{figure}[H]%
-    \centering
-    \includegraphics[angle=\figAngle,width=\figScale\textwidth]{#2}%
-	\end{figure}%
-}
-
 \newcommand{\filename}[1]{%
 	\texttt{#1}%
 }
 
-\newcommand{\vhdl}[1]{%
-  \lstinputlisting[language=vhdl]{#1}
+\newcommand{\ipa}[1]{%
+	\texttt{/#1/}%
 }
+
+\renewcommand{\~}{\char`~}
+
+\newcommand*{\obj}[1]{\texttt{[#1]}}
+\newcommand*{\msg}[1]{\texttt{[#1(}}
+
 
 \newcommand*\paths[1]{\lstset{inputpath=#1}\graphicspath{#1}}
 
