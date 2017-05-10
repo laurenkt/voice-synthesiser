@@ -1,108 +1,121 @@
-#N canvas 2067 22 1199 728 10;
-#X obj 49 616 outlet~;
+#N canvas 801 173 905 748 10;
+#X obj 26 646 outlet~;
 #N canvas 0 22 668 488 (subpatch) 0;
 #X array \$0-glottis 515 float 4;
 #X coords 0 1 514 -1 70 50 2 0 0;
-#X restore 105 195 graph;
-#X obj 49 340 *~;
-#X obj 49 393 lop~;
-#X obj 172 545 tabosc4~ \$0-glottis;
-#X obj 249 107 lfmodel~ \$0-glottis 515;
-#X obj 187 212 hsl 60 15 0 1 0 0 \$0-aspiration \$0-aspiration.label
-Aspiration 8 8 1 11 -262144 -1 -1 590 1;
-#X obj 187 230 hsl 60 15 0 5 0 0 \$0-frication \$0-frication.label
+#X restore 56 175 graph;
+#X obj 26 320 *~;
+#X obj 26 373 lop~;
+#X obj 149 585 tabosc4~ \$0-glottis;
+#X obj 169 107 lfmodel~ \$0-glottis 515;
+#X obj 135 192 hsl 60 15 0 1 0 0 \$0-aspiration \$0-aspiration.label
+Aspiration 8 8 1 11 -262144 -1 -1 295 1;
+#X obj 135 210 hsl 60 15 0 5 0 0 \$0-frication \$0-frication.label
 Frication 8 8 1 11 -262144 -1 -1 0 1;
-#X obj 49 294 r \$0-aspiration;
-#X obj 123 56 s \$0-f0.label;
-#X obj 172 525 r \$0-f0;
-#X obj 70 367 r \$0-aspiration.cutoff;
-#X obj 773 543 r source.fric;
-#X obj 107 404 r \$0-frication;
-#X obj 107 451 *~;
-#X obj 776 468 r source.asp;
-#X obj 776 367 r source.voiced;
-#X msg 776 488 \; source.asp.gain \$1 \$3 \; source.asp.cutoff \$2
+#X obj 26 274 r \$0-aspiration;
+#X obj 547 645 s \$0-f0.label;
+#X obj 149 556 r \$0-f0;
+#X obj 47 347 r \$0-aspiration.cutoff;
+#X obj 534 440 r source.fric;
+#X obj 87 382 r \$0-frication;
+#X obj 87 429 *~;
+#X obj 537 365 r source.asp;
+#X obj 537 289 r source.voiced;
+#X msg 537 387 \; source.asp.gain \$1 \$3 \; source.asp.cutoff \$2
 \$3 \;;
-#X obj 255 230 hsl 50 15 1 20000 0 0 \$0-frication.shelf.low \$0-frication.shelf.low.label
-Lo:3000Hz 0 8 1 9 -262144 -1 -1 735 1;
-#X obj 255 212 hsl 50 15 0 20000 0 0 \$0-aspiration.cutoff \$0-aspiration.cutoff.label
+#X obj 205 210 hsl 50 15 1 20000 0 0 \$0-frication.shelf.low \$0-frication.shelf.low.label
+Lo:98Hz 0 8 1 9 -262144 -1 -1 24 1;
+#X obj 205 192 hsl 50 15 0 20000 0 0 \$0-aspiration.cutoff \$0-aspiration.cutoff.label
  1000Hz 0 8 1 11 -262144 -1 -1 245 1;
-#X obj 108 150 hsl 70 15 6 600 1 0 \$0-f0 \$0-f0.label F0=131.6Hz 8
-8 1 11 -204800 -1 -1 4627 1;
-#X obj 552 218 formatlabel \$0-aspiration.cutoff   Hz;
-#X obj 552 237 formatlabel \$0-f0 F0= Hz 1;
-#X obj 64 317 pink~;
-#X text 576 21 process signals with lines into UI;
-#X text 557 173 update lables when params change;
-#X text 778 344 route namespaced receivers;
-#X text 360 300 SIGNALS:                source.voiced
-[f0] [gain] [flutter] [Rd] [time_ms] \; source.asp [gain] [cutoff]
-[time_ms] \; source.fric [gain] [time_ms] source.gain [[gain] time_ms]
+#X obj 59 108 hsl 70 15 6 600 1 0 \$0-f0 \$0-f0.label F0=160.5Hz 8
+8 1 11 -204800 -1 -1 4925 1;
+#X obj 539 199 formatlabel \$0-aspiration.cutoff   Hz;
+#X obj 539 218 formatlabel \$0-f0 F0= Hz 1;
+#X obj 41 297 pink~;
+#X text 546 1 process signals with lines into UI;
+#X text 544 154 update lables when params change;
+#X text 539 266 route namespaced receivers;
+#X obj 538 68 rls source.asp.cutoff \$0-aspiration.cutoff.label;
+#X obj 538 48 rls source.asp.gain \$0-aspiration.label;
+#X obj 658 577 rls source.voiced.flutter;
+#X obj 547 621 quasirandomdrift 50;
+#X obj 26 623 expr~ $v2+$v3*($v1+1);
+#X obj 273 60 r source.voiced.timing;
+#X obj 273 80 unpack f f;
+#X obj 238 40 rls source.voiced.epsilon;
+#X obj 169 0 rls source.voiced.E_e;
+#X text 644 287 source.voiced f0 E_e time_ms;
+#X obj 547 594 rls f0;
+#X msg 537 310 \; f0 \$1 \$3 \; source.voiced.E_e \$2 \$3 \;;
+#X obj 202 20 rls source.voiced.alpha;
+#X obj 87 530 biquad~;
+#X obj 263 210 hsl 50 15 1 20000 0 0 \$0-frication.shelf.high \$0-frication.shelf.high.label
+Hi:200Hz 0 8 1 9 -262144 -1 -1 49 1;
+#X obj 538 125 rls source.fric.shelf.high \$0-frication.shelf.high.label
 ;
-#X obj 568 88 rls source.asp.cutoff \$0-aspiration.cutoff.label;
-#X obj 568 68 rls source.asp.gain \$0-aspiration.label;
-#X obj 234 -12 rls source.voiced.flutter;
-#X obj 172 565 *~ 1;
-#X obj 132 30 quasirandomdrift 50;
-#X obj 49 593 expr~ $v2+$v3*($v1+1);
-#X obj 422 16 r source.voiced.timing;
-#X obj 443 48 unpack f f;
-#X obj 237 13 nbx 5 14 0 100 0 0 empty empty empty 0 -8 0 10 -262144
--1 -1 0 256;
-#X obj 302 54 rls source.voiced.epsilon;
-#X obj 251 42 rls source.voiced.E_e;
-#X text 883 365 source.voiced f0 E_e time_ms;
-#X obj 123 5 rls f0;
-#X msg 776 387 \; f0 \$1 \$3 \; source.voiced.E_e \$2 \$3 \;;
-#X obj 243 76 rls source.voiced.alpha;
-#X obj 107 540 biquad~;
-#X obj 313 230 hsl 50 15 1 20000 0 0 \$0-frication.shelf.high \$0-frication.shelf.high.label
-Hi:16000Hz 0 8 1 9 -262144 -1 -1 3920 1;
-#X obj 568 145 rls source.fric.shelf.high \$0-frication.shelf.high.label
+#X obj 538 106 rls source.fric.shelf.low \$0-frication.shelf.low.label
 ;
-#X obj 568 126 rls source.fric.shelf.low \$0-frication.shelf.low.label
-;
-#X obj 552 256 formatlabel \$0-frication.shelf.low Lo: Hz;
-#X obj 552 199 formatlabel \$0-frication.shelf.high Hi: Hz;
-#X obj 155 441 r \$0-frication.shelf.low;
-#X obj 314 481 r \$0-frication.shelf.high;
-#X obj 106 490 biquad~;
-#X obj 314 504 lowpass 100 50;
-#X obj 568 107 rls source.fric.gain \$0-frication.label;
-#X obj 568 49 rls source.voiced.gain \$0-voice.label;
-#X msg 774 579 \; source.fric.gain \$1 \$4 \; source.fric.shelf.low
+#X obj 539 237 formatlabel \$0-frication.shelf.low Lo: Hz;
+#X obj 539 180 formatlabel \$0-frication.shelf.high Hi: Hz;
+#X obj 135 431 r \$0-frication.shelf.low;
+#X obj 145 479 r \$0-frication.shelf.high;
+#X obj 87 480 biquad~;
+#X obj 145 499 lowpass 100 50;
+#X obj 538 87 rls source.fric.gain \$0-frication.label;
+#X obj 538 29 rls source.voiced.gain \$0-voice.label;
+#X msg 534 461 \; source.fric.gain \$1 \$4 \; source.fric.shelf.low
 \$2 \$4 \; source.fric.shelf.high \$3 \$4 \;;
-#X obj 122 428 noise~;
-#X obj 155 464 highpass 100 300;
+#X obj 102 406 noise~;
+#X obj 135 454 highpass 100 300;
+#X text 623 366 source.asp gain cutoff_freq time_ms;
+#X text 277 586 read from lf model wavetable;
+#X obj 602 577 loadbang;
+#X obj 658 599 i 25;
+#X text 549 549 process f0 through flutter;
+#X text 693 599 default FL of 25;
+#X obj -3 -65 cnv 15 900 60 empty \$0-pddp.cnv.header source~ 3 12
+0 18 -232576 -1 0;
+#X text 10 -42 programmable voice source with LF model and aspiration/fricatino
+noise generators;
+#X text 330 106 lfmodel writes to wavetable specified;
+#X text 86 296 pink noise is closer to power distribution mentioned
+in Johnson 2008;
+#X text 188 393 don't use shaped noise here - shape with shelf filter
+instead;
+#X text 167 622 amplitude-modulate the aspiration noise with voice
+source \, but add frication noise directly;
+#X text 621 441 source.fric gain loshelf_hz hishelf_hz time_ms;
+#X text 290 434 shelf filter (bp filter too pointy at centre freq)
+;
 #X connect 2 0 3 0;
-#X connect 3 0 33 0;
-#X connect 4 0 31 0;
+#X connect 3 0 31 0;
+#X connect 4 0 31 2;
 #X connect 8 0 2 0;
 #X connect 10 0 4 0;
 #X connect 11 0 3 1;
-#X connect 12 0 55 0;
+#X connect 12 0 52 0;
 #X connect 13 0 14 0;
-#X connect 14 0 51 0;
+#X connect 14 0 48 0;
 #X connect 15 0 17 0;
-#X connect 16 0 41 0;
+#X connect 16 0 38 0;
 #X connect 23 0 2 1;
-#X connect 30 0 36 0;
-#X connect 31 0 33 2;
-#X connect 32 0 9 0;
-#X connect 33 0 0 0;
-#X connect 34 0 35 0;
-#X connect 35 0 5 1;
-#X connect 35 1 5 0;
-#X connect 36 0 32 1;
-#X connect 37 0 5 4;
-#X connect 38 0 5 2;
-#X connect 40 0 32 0;
-#X connect 42 0 5 3;
-#X connect 43 0 33 1;
-#X connect 49 0 57 0;
-#X connect 50 0 52 0;
-#X connect 51 0 43 0;
-#X connect 52 0 43 0;
-#X connect 56 0 14 1;
-#X connect 57 0 51 0;
-#X coords 0 -1 1 1 300 150 1 100 100;
+#X connect 29 0 58 0;
+#X connect 30 0 9 0;
+#X connect 31 0 0 0;
+#X connect 32 0 33 0;
+#X connect 33 0 5 3;
+#X connect 33 1 5 4;
+#X connect 34 0 5 2;
+#X connect 35 0 5 0;
+#X connect 37 0 30 0;
+#X connect 39 0 5 1;
+#X connect 40 0 31 1;
+#X connect 46 0 54 0;
+#X connect 47 0 49 0;
+#X connect 48 0 40 0;
+#X connect 49 0 40 0;
+#X connect 53 0 14 1;
+#X connect 54 0 48 0;
+#X connect 57 0 58 0;
+#X connect 58 0 30 1;
+#X coords 0 -1 1 1 270 130 2 50 100;
