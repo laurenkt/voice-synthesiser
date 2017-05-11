@@ -1,16 +1,16 @@
-#N canvas 134 302 1206 661 10;
+#N canvas 213 188 1224 668 10;
 #X obj 109 121 hsl 60 15 0 1 0 0 \$0-E_e \$0-E_e.label E_e=0  2 8
 1 11 -262144 -1 -1 0 1;
-#X obj 109 140 hsl 60 15 -50 50 0 0 \$0-alpha \$0-alpha.label α= 0
-2 8 1 11 -262144 -1 -1 2982 1;
-#X obj 179 121 hsl 60 15 0 1 0 0 \$0-T_e \$0-T_e.label T_e=1  2 8
-1 11 -262144 -1 -1 5900 1;
-#X obj 179 140 hsl 60 15 0 1 0 0 \$0-T_p \$0-T_p.label T_p=1  2 8
-1 11 -262144 -1 -1 5900 1;
-#X obj 179 159 hsl 60 15 0 1 0 0 \$0-T_a \$0-T_a.label T_a=0  2 8
-1 11 -228856 -162280 -1 0 1;
-#X obj 109 159 hsl 60 15 0 200 0 0 \$0-eps \$0-eps.label ε= 0 2 8
-1 11 -262144 -1 -1 13 1;
+#X obj 109 140 hsl 60 15 -50 50 0 0 \$0-alpha \$0-alpha.label α= 3
+2 8 1 11 -262144 -1 -1 3127 1;
+#X obj 179 121 hsl 60 15 0 1 0 0 \$0-T_e \$0-T_e.label T_e=0.55  2
+8 1 11 -262144 -1 -1 3245 1;
+#X obj 179 140 hsl 60 15 0 1 0 0 \$0-T_p \$0-T_p.label T_p=0.44  2
+8 1 11 -262144 -1 -1 2596 1;
+#X obj 179 159 hsl 60 15 0 1 0 0 \$0-T_a \$0-T_a.label T_a=0.01  2
+8 1 11 -228856 -162280 -1 59 1;
+#X obj 109 159 hsl 60 15 0 200 0 0 \$0-eps \$0-eps.label ε= 30 2
+8 1 11 -262144 -1 -1 885 1;
 #X obj -186 194 v eps;
 #X obj -252 156 v T_a;
 #X obj -198 156 v T_p;
@@ -33,15 +33,9 @@
 #X obj -198 290 expr sin(pi/T_p * $i1/N);
 #X obj -309 337 expr E_e/(exp(alpha*T_e)*sin((pi/T_p) * T_e));
 #X obj -284 511 v N;
-#X obj 176 572 until;
-#X obj 221 595 + 1;
-#X msg 146 572 0;
-#X obj 176 595 i;
-#X obj 176 526 v N;
-#X msg 176 549 \$1;
 #X obj 176 481 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 176 618 s \$0-k;
+#X obj 191 617 s \$0-k;
 #X obj -284 490 i \$2;
 #X msg -243 583 \; \$1 resize \$2 \;;
 #X obj -88 421 tabwrite \$1;
@@ -59,7 +53,7 @@
 #X obj 350 426 v T_a;
 #X obj 392 448 change;
 #X obj 392 426 v eps;
-#X text 162 318 originally this just happened every DSP cycle but this
+#X text 183 329 originally this just happened every DSP cycle but this
 wastes a lot of processor power so now updates are filtered to only
 when parameters have changed;
 #X text 265 564 will emit 0 to N integers in a sequence \, almost instantly
@@ -102,9 +96,9 @@ when parameters have changed;
 #X obj 205 237 formatlabel \$0-T_p T_p=   2;
 #X obj 281 138 s \$0-T_a.label;
 #X obj 205 256 formatlabel \$0-T_a T_a=   2;
-#X obj -309 -14 cnv 15 1200 70 empty \$0-pddp.cnv.header lfmodel~ <wavetable_name> <num_samples>
+#X obj -308 -14 cnv 15 1200 70 empty \$0-pddp.cnv.header lfmodel~ <wavetable_name> <num_samples>
 3 12 0 18 -232576 -1 0;
-#X text -296 9 configurable liljencrants-fant model of voice source
+#X text -295 9 configurable liljencrants-fant model of voice source
 configure with a wavetable name to write to that table \, and a number
 of samples (table will be auto-resized);
 #X text 208 199 update UI on changes;
@@ -117,93 +111,93 @@ LF revisited paper;
 in this section);
 #X text 264 591 each one will be sent to lf model equation to write
 new value for that particular sample;
-#X obj 178 60 inlet;
-#X obj 196 80 inlet;
-#X obj 62 59 inlet;
-#X obj 113 79 inlet;
-#X obj 20 110 inlet;
+#X obj 198 77 inlet;
+#X obj 235 77 inlet;
+#X obj 124 77 inlet;
+#X obj 161 77 inlet;
+#X obj 87 77 inlet;
+#X obj 176 569 uzi;
+#X obj 191 594 - 1;
+#X obj 191 529 loadbang;
+#X obj 191 549 i \$2;
 #X connect 12 0 15 0;
 #X connect 12 0 14 0;
 #X connect 13 0 20 1;
 #X connect 14 0 13 0;
 #X connect 14 0 24 0;
 #X connect 14 0 25 0;
-#X connect 14 0 37 1;
+#X connect 14 0 31 1;
 #X connect 14 1 18 0;
 #X connect 14 1 19 0;
-#X connect 14 1 37 1;
+#X connect 14 1 31 1;
 #X connect 15 0 14 1;
 #X connect 16 0 17 0;
-#X connect 17 0 37 0;
+#X connect 17 0 31 0;
 #X connect 18 0 16 0;
 #X connect 19 0 16 1;
-#X connect 20 0 37 0;
+#X connect 20 0 31 0;
 #X connect 22 0 21 0;
 #X connect 23 0 22 0;
-#X connect 23 0 35 0;
-#X connect 23 0 38 0;
+#X connect 23 0 29 0;
+#X connect 23 0 32 0;
 #X connect 24 0 20 2;
 #X connect 25 0 20 0;
-#X connect 27 0 30 0;
-#X connect 28 0 30 1;
-#X connect 29 0 30 1;
-#X connect 30 0 28 0;
-#X connect 30 0 34 0;
-#X connect 31 0 32 0;
-#X connect 32 0 27 0;
-#X connect 32 0 29 0;
-#X connect 33 0 80 0;
-#X connect 35 0 26 0;
-#X connect 38 0 39 0;
-#X connect 39 0 36 0;
-#X connect 40 0 33 0;
+#X connect 27 0 74 0;
+#X connect 29 0 26 0;
+#X connect 32 0 33 0;
+#X connect 33 0 30 0;
+#X connect 34 0 27 0;
+#X connect 35 0 34 0;
+#X connect 36 0 27 0;
+#X connect 37 0 36 0;
+#X connect 38 0 27 0;
+#X connect 39 0 38 0;
+#X connect 40 0 27 0;
 #X connect 41 0 40 0;
-#X connect 42 0 33 0;
+#X connect 42 0 27 0;
 #X connect 43 0 42 0;
-#X connect 44 0 33 0;
+#X connect 44 0 27 0;
 #X connect 45 0 44 0;
-#X connect 46 0 33 0;
-#X connect 47 0 46 0;
-#X connect 48 0 33 0;
-#X connect 49 0 48 0;
-#X connect 50 0 33 0;
-#X connect 51 0 50 0;
-#X connect 56 0 23 0;
-#X connect 57 0 11 0;
-#X connect 58 0 7 0;
-#X connect 59 0 8 0;
-#X connect 60 0 9 0;
-#X connect 61 0 10 0;
-#X connect 62 0 6 0;
-#X connect 64 0 65 0;
-#X connect 65 0 88 0;
-#X connect 66 0 76 0;
-#X connect 66 0 77 0;
-#X connect 66 0 78 0;
-#X connect 66 0 79 0;
-#X connect 70 0 84 0;
-#X connect 73 0 70 0;
+#X connect 50 0 23 0;
+#X connect 51 0 11 0;
+#X connect 52 0 7 0;
+#X connect 53 0 8 0;
+#X connect 54 0 9 0;
+#X connect 55 0 10 0;
+#X connect 56 0 6 0;
+#X connect 58 0 59 0;
+#X connect 59 0 82 0;
+#X connect 60 0 70 0;
+#X connect 60 0 71 0;
+#X connect 60 0 72 0;
+#X connect 60 0 73 0;
+#X connect 64 0 78 0;
+#X connect 67 0 64 0;
+#X connect 70 0 69 0;
+#X connect 71 0 61 0;
+#X connect 71 0 65 0;
+#X connect 72 0 62 0;
+#X connect 72 0 66 0;
+#X connect 73 0 68 0;
+#X connect 73 0 63 0;
+#X connect 74 0 98 0;
+#X connect 75 0 45 0;
+#X connect 75 0 43 0;
+#X connect 75 0 41 0;
+#X connect 75 0 39 0;
+#X connect 75 0 37 0;
+#X connect 75 0 35 0;
+#X connect 75 1 74 1;
 #X connect 76 0 75 0;
-#X connect 77 0 67 0;
-#X connect 77 0 71 0;
-#X connect 78 0 68 0;
-#X connect 78 0 72 0;
-#X connect 79 0 74 0;
-#X connect 79 0 69 0;
-#X connect 80 0 31 0;
-#X connect 81 0 51 0;
-#X connect 81 0 49 0;
-#X connect 81 0 47 0;
-#X connect 81 0 45 0;
-#X connect 81 0 43 0;
-#X connect 81 0 41 0;
-#X connect 81 1 80 1;
-#X connect 82 0 81 0;
-#X connect 84 0 66 0;
-#X connect 84 1 66 0;
-#X connect 99 0 3 0;
-#X connect 100 0 2 0;
-#X connect 101 0 1 0;
-#X connect 102 0 0 0;
-#X connect 103 0 5 0;
+#X connect 78 0 60 0;
+#X connect 78 1 60 0;
+#X connect 93 0 2 0;
+#X connect 94 0 3 0;
+#X connect 95 0 1 0;
+#X connect 96 0 5 0;
+#X connect 97 0 0 0;
+#X connect 98 2 99 0;
+#X connect 99 0 28 0;
+#X connect 100 0 101 0;
+#X connect 101 0 98 1;
 #X coords 0 -1 1 1 146 80 1 100 100;

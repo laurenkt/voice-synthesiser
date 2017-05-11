@@ -6,6 +6,7 @@
 	\coverpage{PureData Source-filter Speech Synthesiser}
 	
 	\begin{multicols}{2}
+		%\raggedcolumns% needed to fix inconsistent column spacing
 	
 		\section{Principles of voice synthesis}
 		\input{1_principles}
@@ -25,10 +26,14 @@
 	\section{Appendix}
 	
 	\input{x1_ipa_vpa}
-	\input{x2_acoustics}		
-	\input{x3_messages}
+	\pagebreak
+	\input{x2_acoustics}
+	%\pagebreak
+	%\input{x3_messages}
+	\pagebreak
 	\input{x4_glossary}
-		
+	
+	\pagebreak
 	\bibliographystyle{ieeetr}
 	\bibliography{library.bib}
 

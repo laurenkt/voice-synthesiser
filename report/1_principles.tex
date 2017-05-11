@@ -1,34 +1,28 @@
+The source-filter model of speech describes voice production as: a power source, which excites a sound source (the vocal folds), which emit sound, which passes through a series of filters (the vocal tract) e.g. the nasal cavity, the mouth, tongue, teeth, and finally radiation from the lips \cite{Howard2008}.
 
-%	1. Background of human voice system
-%	2. Approaches for modelling this
-%	3. Source-filter approach specifically
-%	4. More details about vowels vs consonants, and the voice source
-
-The source-filter model of speech construction considers voice production as essentially a system of a power source exciting a sound source (the vocal folds), which emit sound through a series of filters (the vocal tract) e.g. the nasal cavity, the mouth and its shape being manipulated, the tongue and its position, and finally radiation from the lips \cite{Howard2008}. 
-
-\textit{Voiced} speech, such as vowels and some consonants, have a pitch (and therefore a fundamental frequency). This results from the vibration of the focal folds in the larynx \cite{Howard2008}. \textit{Unvoiced} speech such as consonants such as \ipa{s} and a \ipa{tʃ} is created from turbulent air travelling through a constriction in the vocal tract \cite{Howard2008,Narayanan2000,Johnson2003} and can be modelled aeroacoustically as jets.
+\textit{Voiced} speech, such as vowels and some consonants, have a pitch (and therefore a fundamental frequency). This results from the vibration of the focal folds in the larynx \cite{Howard2008}. \textit{Unvoiced} speech such as consonants such as \ipa{s} and a \ipa{tʃ} is created from turbulent air travelling through a constriction in the vocal tract \cite{Howard2008,Narayanan2000,Johnson2003}.
 
 When voiced sound is produced, the sound will be modified as it travels along the vocal tract: up the pharynx, throw the nasal and mouth cavities, around the tongue and alveolar ridge, the teeth, through the nostrils and radiating from the lips. Various parts of the tract will have filtering and resonance effects which produces non-harmonic peaks in the sound signal as it is produced \cite{Johnson2003}. These peaks are called \textit{formants}. The effects of the vocal tract can be summarised as the vocal tract transfer function (VTTF).
 
 The relative positions of these formants are what enables us to perceive different vowels even if they are of the same pitch (whilst people may produce certain vowels at higher pitches compared to other vowels, the pitch itself is not crucial, as can be demonstrated by singing vowels at different pitches and observing that the vowel can still be determined).
 
-For a very simple but intelligible synthesiser then, we would have to produce a wave rich in harmonics and then put it through an array of filters to model the formants. The reason it is necessary to have a wave rich in harmonics is so there is enough higher frequency content for the formants to pass through to create intelligible speech.
+For a simple but intelligible synthesiser we must produce a wave rich in harmonics, then pass it through an array of filters modelling the vocal tract and creating formants. The reason it is necessary to have a wave rich in harmonics is so there is enough higher frequency content for VTTF to produce formants from the sound source.
 
-Generally three filters (formants) and a sawtooth wave as a sound source would be sufficient for intelligibility if not naturalness.
+Generally three filters and a sawtooth wave as a sound source would be sufficient for intelligibility if not naturalness.
 
-Frication noise can be modelled loosely with white noise, although in reality it is not uniformly distributed; it starts to fall off at about 1kHz and falls roughly linearly to zero at 10kHz \cite{Johnson2003}.
+The vocal tract filters can be modelled in parallel or in series (referred to as cascade synthesis in the literature) and there are pros and cons for either approach. Liljencrants \cite{Liljencrants1995} notes parallel makes it easier to preserve correct formant amplitudes and this is the approach I took, as the feedback loop of analysing the output of the synthesiser and making adjustments needed to be as short as possible given the time constraints of the project.
 
-The formants can be modelled in parallel or in series (referred to as cascade synthesis in the literature) and there are pros and cons for either approach. Liljencrants \cite{Liljencrants1995} notes parallel makes it easier to preserve correct formant amplitudes and this is the approach I took, as the feedback loop of analysing the output of the synthesiser and making adjustments needed to be as short as possible given the time constraints of the project.
+For consonants, additional sounds must be produced. I have focused on fricatives which can be modelled loosely with white noise, although in reality it is not uniformly distributed; it starts to fall off at about 1kHz and falls roughly linearly to zero at 10kHz \cite{Johnson2003}. The consonants that are closer to vowels can be produced using formant synthesis but with a different spectral tilt to the sound source.
 
 \subsection{Naturalness}
 
-To develop natural sounding synthesis it can be useful to introduce high frequency \textit{aspiration noise} in the vowels, amplitude-modulated by the voice source \cite{Klatt1990}. Boosting the relative strength of the fundamental is also helpful for male voices in particular \cite{Klatt1990}.
+To develop natural sounding synthesis it is be useful to introduce high frequency \textit{aspiration noise} in the vowels, amplitude-modulated by the voice source \cite{Klatt1990}. Boosting the relative strength of the fundamental is also helpful for male voices in particular \cite{Klatt1990}.
 
-In order to do this it helps to revisit the sound source that creates the spectral properties needed to be exhibited by the filters. Fant et al proposed \cite{Fant1985} a four parameter model of differentiated glottal flow called the LF-model which has formed the basis of much work in this area. 
+In order to do this it's worth revisiting the sound source that creates the spectral properties needed to be exhibited by the filters. Fant et al proposed \cite{Fant1985} a four parameter model of differentiated glottal flow called the LF-model which has formed the basis of much work in this area. Alternative models do exist such as those that try to create a physical model of the glottis \cite{Liljencrants1995}.
 
-The LF model exploits the (assumed) commutative relationship between the voice source, vocal tract, and lip radiation, to combine the effects of the voice source and lip radiation into one model \cite{DelPozo2008}.
+The LF-model exploits the (assumed) commutative relationship between the voice source, vocal tract, and lip radiation, to combine the effects of the voice source and lip radiation into one model \cite{DelPozo2008}.
 
-Li et al \cite{Li2011} define a version of the simplified LF-model expressed for a discrete implementation, replacing the time parameters with ratios and samples (rearranged into equation \ref{eq:discrete_lfmodel}, below).
+Li et al \cite{Li2011} define a version of the simplified LF-model expressed for a discrete implementation, replacing the time parameters with ratios and samples (rearranged into equation \ref{eq:discrete_lfmodel}, below). This is the version I implemented in PD.
  
 \begin{equation}%
 \label{eq:discrete_lfmodel}%
@@ -49,9 +43,9 @@ A revisited LF-model uses a data reduction scheme to reduce the number of contro
 %
 which determines the spectral tilt of the waveform \cite{Fant1995}. 
 
-An analysis done by Gobl \cite{Gobl1988} produces some useful indications for typical male speakers (e.g. $F_a = \si{700 Hz}$). $E_e$ tends to be stronger for vowels and weaker for consonants. The limitations of this data are that it is gathered from only three speakers, all Swedish, and all male. Nonetheless it is a useful starting point in lieu of further analysis. Gobl also notes the impact of speech prosody (stress, intonation) on voice source parameters 
+An analysis done by Gobl \cite{Gobl1988} produces some useful indications for typical male speakers (e.g. $F_a = \si{700 Hz}$). $E_e$ tends to be stronger for vowels and weaker for consonants, though the dataset is limited. It is a useful starting point in lieu of further analysis. Gobl also notes the impact of speech prosody (stress, intonation) on voice source parameters but that, though interesting, is beyond the scope of this system.
 
-A feature of real speech is that the fundamental pitch is not constant, it exhibits some flutter \cite{Klatt1990}. One approach to model this might be to vary the timing parameters in the LF-model, but Klatt \& Klatt note \cite{Klatt1990} many efforts at randomising the fundamental produce harshness in the resultant voice, and they propose an alternative pseudorandom contour to $F_0$ where
+A feature of real speech is that the fundamental pitch is not constant, but exhibits flutter \cite{Klatt1990}. Synthesised speech with a constant $F_0$ does not sound natural. One solution might be to vary the timing parameters in the LF-model, but Klatt \& Klatt note \cite{Klatt1990} many efforts at randomising the fundamental produce harshness in the resultant voice, and they propose an alternative pseudorandom contour to $F_0$ where
 %
 \begin{equation} \label{eq:flutter}
 	\begin{aligned}

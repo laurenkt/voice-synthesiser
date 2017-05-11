@@ -1,34 +1,27 @@
 \subsection{Glossary of custom PD objects}
 \label{x:glossary}
 
-\newcommand{\pdobject}[5]{%
-\vspace*{-\baselineskip}% decrease space between tables
-\begin{table}[H]%
-\begin{tabular}{llll}%
- & \textbf{Arguments} & \textbf{Inlets} & \textbf{Outlets} \\ \hline
-\rowcolor[HTML]{EFEFEF} 
-\multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{\texttt{#1}}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textit{\texttt{#2}}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textit{\texttt{#3}}} & \multicolumn{1}{l}{\cellcolor[HTML]{EFEFEF}\textit{\texttt{#4}}} \\ \hline
-\multicolumn{4}{p{\textwidth}}{#5} \\ 
-\end{tabular}%
-\end{table}%
+\newcommand{\pdobject}[2]{%
+	\item \obj{#1} #2
 }
 
-\pdobject{analyser\char`~}{–}{\$input}{\$passthrough}{
-Display a time-domain and a frequency-domain representation (log-scale FFT) of the signal put into it. Does not alter the signal in any way.}
-
-\pdobject{defaultarg}{}{}{}{}
-\pdobject{fmt\char`~}{}{}{}{}
-\pdobject{formatlabel}{}{}{}{}
-\pdobject{interface}{}{}{}{}
-\pdobject{lfmodel\char`~}{}{}{}{}
-\pdobject{master\char`~}{}{}{}{}
-\pdobject{msgpipe}{}{}{}{}
-\pdobject{quasirandomdrift}{}{}{}{}
-\pdobject{rdefault}{}{}{}{}
-\pdobject{recall}{}{}{}{}
-\pdobject{rls}{}{}{}{}
-\pdobject{round}{}{}{}{}
-\pdobject{rqlist}{}{}{}{}
-\pdobject{snapchange\char`~}{}{}{}{}
-\pdobject{source\char`~}{}{}{}{}
-\pdobject{synth}{}{}{}{}
+\begin{itemize}
+	\pdobject{analyser\char`~}{–}{\$input}{\$passthrough}{
+	Display a time-domain and a frequency-domain representation (log-scale FFT) of the signal put into it. Does not alter the signal in any way.}
+	\pdobject{defaultarg}{}
+	\pdobject{fmt\char`~}{}
+	\pdobject{formatlabel}{}
+	\pdobject{interface}{}
+	\pdobject{lfmodel\char`~}{}
+	\pdobject{master\char`~}{}
+	\pdobject{msgpipe}{Programmable message delay pipe: any global message prefixed with \msg{wait t} where $t$ is a number of milliseconds will be delayed by that time by that amount of milliseconds. For example the message \msg{wait 15 f0 100 50} would wait 15 ms before sending the message \msg{100 50} to the receiver \texttt{f0}.}
+	\pdobject{quasirandomdrift}{}
+	\pdobject{rdefault}{}
+	\pdobject{recall}{}
+	\pdobject{rls}{}
+	\pdobject{round}{}
+	\pdobject{rqlist}{}
+	\pdobject{snapchange\char`~}{}
+	\pdobject{source\char`~}{}
+	\pdobject{synth}{Master patch - start here}
+\end{itemize}
